@@ -1,0 +1,61 @@
+version: '3'
+
+volumes:
+  db-data:
+  vendor:
+  var:
+
+services:
+  db:
+    container_name: azeta_db
+    image: mysql:5.7
+    restart: always
+    ports:
+      - '4306:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootPassword
+      MYSQL_DATABASE: azeta
+      MYSQL_USER: azeta
+      MYSQL_PASSWORD: password
+
+  php:
+    container_name: azeta_php
+    build:
+      context: ./
+      dockerfile: build/docker/Dockerfile
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+    links:
+      - db
+
+  nginx:
+    container_name: azeta_nginx
+    image: nginx:stable-alpine
+    ports:
+      - '8080:80'
+    volumes:
+      - ./:/var/www/html
+      - ./build/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    links:
+      - db
+
+  phpmyadmin:
+    container_name: azeta_phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootPassword
+    restart: always
+    ports:
+      - '8081:80'
