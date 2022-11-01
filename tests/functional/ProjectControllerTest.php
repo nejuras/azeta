@@ -16,9 +16,9 @@ class ProjectControllerTest extends WebTestCase
             [],
             [],
             [],
-            '[]'
+            '{"title": "project","numberOfGroups": 5,"studentsPerGroup": 2}'
         );
 
-        $this->assertEquals(Response::HTTP_CREATED, $client->getResponse()->getContent());
+        $this->assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
     }
 }
