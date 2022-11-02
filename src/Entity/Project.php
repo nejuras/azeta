@@ -11,6 +11,8 @@ class Project
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\OneToMany(mappedBy: 'projectId', targetEntity: Group::class)]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
