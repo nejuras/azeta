@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class ProjectHandler implements MessageHandlerInterface
+class ProjectCreateHandler implements MessageHandlerInterface
 {
     use SavableTrait;
 

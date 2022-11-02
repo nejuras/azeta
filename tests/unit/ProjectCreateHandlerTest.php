@@ -7,7 +7,7 @@ namespace App\Tests\unit;
 use App\Model\Event\GroupWasCreated;
 use App\Model\Project;
 use App\Entity\Project as ProjectEntity;
-use App\Model\ProjectHandler;
+use App\Model\ProjectCreateHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class ProjectHandlerTest extends TestCase
+class ProjectCreateHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -26,7 +26,7 @@ class ProjectHandlerTest extends TestCase
 
     private MessageBusInterface|ObjectProphecy $messageBus;
 
-    private ProjectHandler $projectHandler;
+    private ProjectCreateHandler $projectHandler;
 
     private array $command = [
         'title' => 'project',
@@ -40,7 +40,7 @@ class ProjectHandlerTest extends TestCase
         $this->eventDispatcher = new EventDispatcher();
         $this->messageBus = $this->prophesize(MessageBusInterface::class);
 
-        $this->projectHandler = new ProjectHandler(
+        $this->projectHandler = new ProjectCreateHandler(
             $this->entityManager->reveal(),
             $this->eventDispatcher,
         );
