@@ -2,3 +2,10 @@ projects.create:
   path: /projects
   methods: [ POST ]
   controller: App\Controller\ProjectController::create
+
+projects.read:
+  path: /projects/{id}
+  methods: [ GET ]
+  controller: App\Controller\ProjectController::read
+  requirements:
+    customerId: '\d+'
